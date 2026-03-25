@@ -2,7 +2,7 @@
 
 A REST API for managing cars built with PHP 8.4 and Symfony 8. No database — data is persisted in JSON files.
 
-**Live demo:** https://gentlecodes-be.hopo.online/
+**Live demo:** https://gentlecodes-be.hopo.online
 
 **Repository:** https://github.com/hopogc/backend-task
 

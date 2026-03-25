@@ -4,7 +4,7 @@ namespace App\Repository;
 
 class ColourRepository
 {
-    private string $filePath;
+    private readonly string $filePath;
 
     public function __construct(string $projectDir)
     {
@@ -13,7 +13,7 @@ class ColourRepository
 
     public function findAll(): array
     {
-        return json_decode(file_get_contents($this->filePath), true);
+        return json_decode(file_get_contents($this->filePath), true, flags: JSON_THROW_ON_ERROR);
     }
 
     public function findById(int $id): ?array

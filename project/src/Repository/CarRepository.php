@@ -4,7 +4,7 @@ namespace App\Repository;
 
 class CarRepository
 {
-    private string $filePath;
+    private readonly string $filePath;
 
     public function __construct(string $projectDir, string $carsFile = 'cars.json')
     {
@@ -13,7 +13,7 @@ class CarRepository
 
     public function findAll(): array
     {
-        return json_decode(file_get_contents($this->filePath), true) ?? [];
+        return json_decode(file_get_contents($this->filePath), true, flags: JSON_THROW_ON_ERROR) ?? [];
     }
 
     public function findById(int $id): ?array
@@ -31,14 +31,7 @@ class CarRepository
     {
         $cars = $this->findAll();
 
-        $maxId = 0;
-        foreach ($cars as $existing) {
-            if ($existing['id'] > $maxId) {
-                $maxId = $existing['id'];
-            }
-        }
-
-        $car['id'] = $maxId + 1;
+        $car['id'] = max([0, ...array_column($cars, 'id')]) + 1;
         $cars[] = $car;
 
         $this->persist($cars);
@@ -62,6 +55,6 @@ class CarRepository
 
     private function persist(array $cars): void
     {
-        file_put_contents($this->filePath, json_encode($cars, JSON_PRETTY_PRINT));
+        file_put_contents($this->filePath, json_encode($cars, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
     }
 }

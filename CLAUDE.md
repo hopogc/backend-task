@@ -8,6 +8,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # Start dev server (localhost:8000)
 npm run dev
 
+# Run tests
+npm test
+
 # Clear Symfony cache
 cd project && php bin/console cache:clear
 
@@ -16,6 +19,9 @@ cd project && composer install
 
 # Inspect registered routes
 cd project && php bin/console debug:router
+
+# Regenerate static OpenAPI spec
+cd project && php bin/console nelmio:apidoc:dump --format=json > public/doc/openapi.json
 ```
 
 ## Architecture
@@ -39,10 +45,10 @@ No database. Data is stored as JSON files in `project/db/`:
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/cars` | List all cars |
-| GET | `/car/{id}` | Get single car |
-| POST | `/cars` | Create car |
-| DELETE | `/cars/{id}` | Delete car |
+| GET | `/api/cars` | List all cars |
+| GET | `/api/car/{id}` | Get single car |
+| POST | `/api/cars` | Create car |
+| DELETE | `/api/cars/{id}` | Delete car |
 
 Validation rules enforced in `src/Validator/CarValidator.php`: `make` and `model` are required strings; `build_date` must be `Y-m-d` format and no older than 4 years; `colour_id` must match an entry in `colours.json`.
 

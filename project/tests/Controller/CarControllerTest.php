@@ -8,16 +8,26 @@ class CarControllerTest extends WebTestCase
 {
     private string $testDbPath;
 
+    private static function recentDate(): string
+    {
+        return date('Y-m-d', strtotime('-1 year'));
+    }
+
+    private static function oldDate(): string
+    {
+        return date('Y-m-d', strtotime('-5 years'));
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
         $this->testDbPath = dirname(__DIR__, 2) . '/db/cars.test.json';
-        file_put_contents($this->testDbPath, json_encode([]));
+        file_put_contents($this->testDbPath, '[]');
     }
 
     protected function tearDown(): void
     {
-        file_put_contents($this->testDbPath, json_encode([]));
+        file_put_contents($this->testDbPath, '[]');
         parent::tearDown();
     }
 
@@ -29,7 +39,6 @@ class CarControllerTest extends WebTestCase
         $client->request('GET', '/api/cars');
 
         $this->assertResponseStatusCodeSame(200);
-        $this->assertJson($client->getResponse()->getContent());
         $this->assertSame([], json_decode($client->getResponse()->getContent(), true));
     }
 
@@ -38,7 +47,7 @@ class CarControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Toyota', 'model' => 'Yaris', 'build_date' => '2023-01-01', 'colour_id' => 1])
+            json_encode(['make' => 'Toyota', 'model' => 'Yaris', 'build_date' => self::recentDate(), 'colour_id' => 1])
         );
 
         $client->request('GET', '/api/cars');
@@ -55,7 +64,7 @@ class CarControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Ford', 'model' => 'Focus', 'build_date' => '2023-06-15', 'colour_id' => 2])
+            json_encode(['make' => 'Ford', 'model' => 'Focus', 'build_date' => self::recentDate(), 'colour_id' => 2])
         );
 
         $this->assertResponseStatusCodeSame(201);
@@ -63,7 +72,7 @@ class CarControllerTest extends WebTestCase
         $this->assertArrayHasKey('id', $data);
         $this->assertSame('Ford', $data['make']);
         $this->assertSame('Focus', $data['model']);
-        $this->assertSame('2023-06-15', $data['build_date']);
+        $this->assertSame(self::recentDate(), $data['build_date']);
         $this->assertSame(2, $data['colour_id']);
     }
 
@@ -72,12 +81,12 @@ class CarControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'BMW', 'model' => 'X5', 'build_date' => '2023-01-01', 'colour_id' => 4])
+            json_encode(['make' => 'BMW', 'model' => 'X5', 'build_date' => self::recentDate(), 'colour_id' => 4])
         );
         $first = json_decode($client->getResponse()->getContent(), true);
 
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Audi', 'model' => 'A3', 'build_date' => '2023-01-01', 'colour_id' => 1])
+            json_encode(['make' => 'Audi', 'model' => 'A3', 'build_date' => self::recentDate(), 'colour_id' => 1])
         );
         $second = json_decode($client->getResponse()->getContent(), true);
 
@@ -88,7 +97,7 @@ class CarControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['model' => 'Focus', 'build_date' => '2023-06-15', 'colour_id' => 1])
+            json_encode(['model' => 'Focus', 'build_date' => self::recentDate(), 'colour_id' => 1])
         );
 
         $this->assertResponseStatusCodeSame(422);
@@ -101,7 +110,7 @@ class CarControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Ford', 'build_date' => '2023-06-15', 'colour_id' => 1])
+            json_encode(['make' => 'Ford', 'build_date' => self::recentDate(), 'colour_id' => 1])
         );
 
         $this->assertResponseStatusCodeSame(422);
@@ -123,7 +132,7 @@ class CarControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Ford', 'model' => 'Focus', 'build_date' => '2010-01-01', 'colour_id' => 1])
+            json_encode(['make' => 'Ford', 'model' => 'Focus', 'build_date' => self::oldDate(), 'colour_id' => 1])
         );
 
         $this->assertResponseStatusCodeSame(422);
@@ -145,7 +154,7 @@ class CarControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Ford', 'model' => 'Focus', 'build_date' => '2023-06-15', 'colour_id' => 99])
+            json_encode(['make' => 'Ford', 'model' => 'Focus', 'build_date' => self::recentDate(), 'colour_id' => 99])
         );
 
         $this->assertResponseStatusCodeSame(422);
@@ -157,7 +166,7 @@ class CarControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Ford', 'model' => 'Focus', 'build_date' => '2023-06-15'])
+            json_encode(['make' => 'Ford', 'model' => 'Focus', 'build_date' => self::recentDate()])
         );
 
         $this->assertResponseStatusCodeSame(422);
@@ -170,7 +179,7 @@ class CarControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Honda', 'model' => 'Civic', 'build_date' => '2023-03-10', 'colour_id' => 3])
+            json_encode(['make' => 'Honda', 'model' => 'Civic', 'build_date' => self::recentDate(), 'colour_id' => 3])
         );
         $created = json_decode($client->getResponse()->getContent(), true);
 
@@ -199,7 +208,7 @@ class CarControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Skoda', 'model' => 'Octavia', 'build_date' => '2022-11-01', 'colour_id' => 2])
+            json_encode(['make' => 'Skoda', 'model' => 'Octavia', 'build_date' => self::recentDate(), 'colour_id' => 2])
         );
         $created = json_decode($client->getResponse()->getContent(), true);
 
@@ -213,15 +222,14 @@ class CarControllerTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('POST', '/api/cars', [], [], ['CONTENT_TYPE' => 'application/json'],
-            json_encode(['make' => 'Skoda', 'model' => 'Octavia', 'build_date' => '2022-11-01', 'colour_id' => 2])
+            json_encode(['make' => 'Skoda', 'model' => 'Octavia', 'build_date' => self::recentDate(), 'colour_id' => 2])
         );
         $created = json_decode($client->getResponse()->getContent(), true);
 
         $client->request('DELETE', '/api/cars/' . $created['id']);
         $client->request('GET', '/api/cars');
 
-        $cars = json_decode($client->getResponse()->getContent(), true);
-        $ids = array_column($cars, 'id');
+        $ids = array_column(json_decode($client->getResponse()->getContent(), true), 'id');
         $this->assertNotContains($created['id'], $ids);
     }
 

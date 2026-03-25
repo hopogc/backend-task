@@ -17,8 +17,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class CarController extends AbstractController
 {
     public function __construct(
-        private CarRepository $carRepository,
-        private CarValidator $carValidator,
+        private readonly CarRepository $carRepository,
+        private readonly CarValidator $carValidator,
     ) {}
 
     #[Route('/api/cars', name: 'cars_list', methods: ['GET'])]
@@ -114,10 +114,10 @@ class CarController extends AbstractController
         }
 
         $car = $this->carRepository->save([
-            'make'       => $data['make'],
-            'model'      => $data['model'],
+            'make' => $data['make'],
+            'model' => $data['model'],
             'build_date' => $data['build_date'],
-            'colour_id'  => $data['colour_id'],
+            'colour_id' => $data['colour_id'],
         ]);
 
         return new JsonResponse($car, Response::HTTP_CREATED);

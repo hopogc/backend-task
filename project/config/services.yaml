@@ -21,3 +21,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Repository\CarRepository:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    App\Repository\ColourRepository:
+        arguments:
+            $projectDir: '%kernel.project_dir%'

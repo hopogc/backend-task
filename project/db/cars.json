@@ -1,0 +1,58 @@
+[
+    {
+        "make": "Toyota",
+        "model": "Yaris",
+        "build_date": "2023-03-15",
+        "colour_id": 1,
+        "id": 1
+    },
+    {
+        "make": "Ford",
+        "model": "Focus",
+        "build_date": "2022-07-20",
+        "colour_id": 2,
+        "id": 2
+    },
+    {
+        "make": "BMW",
+        "model": "3 Series",
+        "build_date": "2024-01-10",
+        "colour_id": 4,
+        "id": 3
+    },
+    {
+        "make": "Volkswagen",
+        "model": "Golf",
+        "build_date": "2023-11-05",
+        "colour_id": 3,
+        "id": 4
+    },
+    {
+        "make": "Audi",
+        "model": "A4",
+        "build_date": "2022-05-18",
+        "colour_id": 4,
+        "id": 5
+    },
+    {
+        "make": "Honda",
+        "model": "Civic",
+        "build_date": "2024-02-28",
+        "colour_id": 1,
+        "id": 6
+    },
+    {
+        "make": "Mercedes",
+        "model": "C-Class",
+        "build_date": "2023-08-14",
+        "colour_id": 3,
+        "id": 7
+    },
+    {
+        "make": "Skoda",
+        "model": "Octavia",
+        "build_date": "2022-12-01",
+        "colour_id": 2,
+        "id": 8
+    }
+]

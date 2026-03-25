@@ -25,7 +25,15 @@ services:
     App\Repository\CarRepository:
         arguments:
             $projectDir: '%kernel.project_dir%'
+            $carsFile: 'cars.json'
 
     App\Repository\ColourRepository:
         arguments:
             $projectDir: '%kernel.project_dir%'
+
+when@test:
+    services:
+        App\Repository\CarRepository:
+            arguments:
+                $projectDir: '%kernel.project_dir%'
+                $carsFile: 'cars.test.json'

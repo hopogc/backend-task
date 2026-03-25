@@ -6,9 +6,9 @@ class CarRepository
 {
     private string $filePath;
 
-    public function __construct(string $projectDir)
+    public function __construct(string $projectDir, string $carsFile = 'cars.json')
     {
-        $this->filePath = $projectDir . '/db/cars.json';
+        $this->filePath = $projectDir . '/db/' . $carsFile;
     }
 
     public function findAll(): array

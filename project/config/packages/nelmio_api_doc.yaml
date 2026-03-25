@@ -1,0 +1,53 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Cars API
+            description: REST API for managing cars
+            version: 1.0.0
+        components:
+            schemas:
+                Car:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                            example: 1
+                        make:
+                            type: string
+                            example: Toyota
+                        model:
+                            type: string
+                            example: Yaris
+                        build_date:
+                            type: string
+                            format: date
+                            example: '2023-03-15'
+                        colour_id:
+                            type: integer
+                            example: 1
+                CarInput:
+                    type: object
+                    required:
+                        - make
+                        - model
+                        - build_date
+                        - colour_id
+                    properties:
+                        make:
+                            type: string
+                            example: Toyota
+                        model:
+                            type: string
+                            example: Yaris
+                        build_date:
+                            type: string
+                            format: date
+                            description: 'Must be within the last 4 years'
+                            example: '2023-03-15'
+                        colour_id:
+                            type: integer
+                            description: '1=red, 2=blue, 3=white, 4=black'
+                            example: 1
+    areas:
+        path_patterns:
+            - ^/api

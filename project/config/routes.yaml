@@ -9,3 +9,15 @@
 
 controllers:
     resource: routing.controllers
+
+app.swagger_ui:
+    path: /doc
+    methods: GET
+    defaults:
+        _controller: nelmio_api_doc.controller.swagger_ui
+
+app.swagger_json:
+    path: /doc/openapi.json
+    methods: GET
+    defaults:
+        _controller: nelmio_api_doc.controller.swagger

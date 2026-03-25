@@ -2,6 +2,7 @@
   "name": "backend-task-new",
   "version": "1.0.0",
   "scripts": {
-    "dev": "php -S localhost:8000 -t project/public"
+    "dev": "php -S localhost:8000 -t project/public",
+    "test": "cd project && php bin/phpunit"
   }
 }

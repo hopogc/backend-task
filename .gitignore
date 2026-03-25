@@ -1,0 +1,15 @@
+# Node
+node_modules/
+
+# Symfony
+project/vendor/
+project/var/
+project/.env.local
+project/.env.local.php
+project/.env.*.local
+project/config/secrets/prod/prod.decrypt.private.php
+project/public/bundles/
+
+# OS
+.DS_Store
+Thumbs.db

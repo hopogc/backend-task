@@ -4,9 +4,10 @@ node_modules/
 # Symfony
 project/vendor/
 project/var/
-project/.env.local
-project/.env.local.php
-project/.env.*.local
+.env
+.env.local
+.env.local.php
+.env.*.local
 project/config/secrets/prod/prod.decrypt.private.php
 project/public/bundles/
 

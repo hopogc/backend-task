@@ -25,6 +25,23 @@ nelmio_api_doc:
                         colour_id:
                             type: integer
                             example: 1
+                Colour:
+                    type: object
+                    properties:
+                        id:
+                            type: integer
+                            example: 1
+                        name:
+                            type: string
+                            example: green
+                ColourInput:
+                    type: object
+                    required:
+                        - name
+                    properties:
+                        name:
+                            type: string
+                            example: green
                 CarInput:
                     type: object
                     required:
